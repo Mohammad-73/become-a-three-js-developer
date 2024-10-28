@@ -38,6 +38,18 @@ plane.position.y = -0.65;
 
 scene.add(sphere, cube, torus, plane);
 
+/**
+ * Lights
+ */
+// Ambient light
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+scene.add(ambientLight);
+
+// Directional light
+const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+directionalLight.position.set(2, 2, -1);
+scene.add(directionalLight);
+
 // sizes
 const sizes = {
   width: window.innerWidth,
