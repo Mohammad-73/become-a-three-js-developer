@@ -1,8 +1,12 @@
+import "./style.css";
 import * as THREE from "three";
-import {
-  OrbitControls,
-  RectAreaLightHelper,
-} from "three/examples/jsm/Addons.js";
+import { OrbitControls } from "three/examples/jsm/Addons.js";
+import * as dat from "dat.gui";
+
+/**
+ * Debug
+ */
+const gui = new dat.GUI();
 
 /**
  * Base
