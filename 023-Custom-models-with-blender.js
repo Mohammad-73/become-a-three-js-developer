@@ -23,27 +23,19 @@ const scene = new THREE.Scene();
  */
 const dracoLoader = new DRACOLoader();
 dracoLoader.setDecoderPath("./static/draco/");
-dracoLoader.setDecoderConfig({ type: "js" });
 
 const gltfLoader = new GLTFLoader();
 gltfLoader.setDRACOLoader(dracoLoader);
 
 let mixer = null;
 
-gltfLoader.load("./static/models/Fox/glTF/Fox.gltf", (gltf) => {
-  //   const children = [...gltf.scene.children];
-  //   for (const child of children) {
-  //     scene.add(child);
-  //   }
-
-  mixer = new THREE.AnimationMixer(gltf.scene);
-  const action = mixer.clipAction(gltf.animations[2]);
-
-  action.play();
-
-  gltf.scene.scale.set(0.025, 0.025, 0.025);
-  scene.add(gltf.scene);
-});
+gltfLoader.load(
+  "./static/models/023-Custom-models-with-blender/hamburger.glb",
+  (gltf) => {
+    gltf.scene.scale.set(0.2, 0.2, 0.2);
+    scene.add(gltf.scene);
+  }
+);
 /**
  * Objects
  */
@@ -52,21 +44,36 @@ const material = new THREE.MeshStandardMaterial();
 material.roughness = 0.4;
 
 // Objects
-const plane = new THREE.Mesh(new THREE.PlaneGeometry(10, 10), material);
-plane.rotation.x = -Math.PI * 0.5;
+const floor = new THREE.Mesh(
+  new THREE.PlaneGeometry(10, 10),
+  new THREE.MeshStandardMaterial({
+    color: "#444444",
+    metalness: 0.5,
+    roughness: 0,
+  })
+);
+floor.receiveShadow = true;
+floor.rotation.x = -Math.PI * 0.5;
 
-scene.add(plane);
+scene.add(floor);
 
 /**
  * Lights
  */
 // Ambient light
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
 scene.add(ambientLight);
 
 // Directional light
-const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-directionalLight.position.set(2, 2, -1);
+const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
+directionalLight.castShadow = true;
+directionalLight.shadow.mapSize.set(1024, 1024);
+directionalLight.shadow.camera.far = 15;
+directionalLight.shadow.camera.left = -7;
+directionalLight.shadow.camera.top = 7;
+directionalLight.shadow.camera.right = 7;
+directionalLight.shadow.camera.bottom = -7;
+directionalLight.position.set(5, 5, 5);
 scene.add(directionalLight);
 
 // sizes
@@ -126,9 +133,9 @@ const tick = () => {
   previousTime = elapsedTime;
 
   // Update mixer
-  if (mixer !== null) {
-    mixer.update(deltaTime);
-  }
+  //   if (mixer !== null) {
+  //     mixer.update(deltaTime);
+  //   }
 
   // Render
   renderer.render(scene, camera);
