@@ -2,8 +2,8 @@ import "../../style.css";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
 import * as dat from "dat.gui";
-// import testVertexShader from "./shaders/test/vertex.glsl";
-// import testFragmentShader from "./shaders/test/fragment.glsl";
+import testVertexShader from "./shaders/test/vertex.glsl";
+import testFragmentShader from "./shaders/test/fragment.glsl";
 
 /**
  * Base
@@ -40,48 +40,8 @@ geometry.setAttribute("aRandom", new THREE.BufferAttribute(randoms, 1));
 
 // Material
 const material = new THREE.ShaderMaterial({
-  vertexShader: `
-    uniform vec2 uFrequency;
-    uniform float uTime;
-
-    varying vec2 vUv;
-    varying float vElevation;
-
-    void main()
-    {
-        vec4 modelPosition = modelMatrix * vec4(position, 1.0);
-
-        float elevation = sin(modelPosition.x * uFrequency.x - uTime) * 0.1;
-        elevation += sin(modelPosition.y * uFrequency.y - uTime) * 0.1;
-
-        modelPosition.z += sin(modelPosition.x * uFrequency.x - uTime) * 0.1;
-        modelPosition.z += sin(modelPosition.y * uFrequency.y - uTime) * 0.1;
-
-        vec4 viewPosition = viewMatrix * modelPosition;
-        vec4 projectedPosition = projectionMatrix * viewPosition;
-
-        gl_Position = projectedPosition;
-
-        vUv = uv;
-        vElevation = elevation;
-    }
-    `,
-  fragmentShader: `
-    uniform vec3 uColor;
-    uniform sampler2D uTexture;
-
-    varying vec2 vUv;
-    varying float vElevation;
-
-    void main()
-    {
-        vec4 textureColor = texture2D(uTexture, vUv);
-        textureColor.rgb *= vElevation * 2.0 + 0.5;
-        gl_FragColor = textureColor;  
-
-        gl_FragColor = vec4(vUv, 1.0, 1.0);
-    }
-  `,
+  vertexShader: testVertexShader,
+  fragmentShader: testFragmentShader,
   transparent: true,
   uniforms: {
     uFrequency: { value: new THREE.Vector2(10, 5) },
