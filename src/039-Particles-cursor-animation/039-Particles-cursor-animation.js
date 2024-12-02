@@ -76,9 +76,26 @@ renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(sizes.pixelRatio);
 
 /**
+ * Displacement
+ */
+const displacement = {};
+
+// 2D canvas
+displacement.canvas = document.createElement("canvas");
+displacement.canvas.width = 128;
+displacement.canvas.height = 128;
+displacement.canvas.style.position = "fixed";
+displacement.canvas.style.width = "512px";
+displacement.canvas.style.height = "512px";
+displacement.canvas.style.top = 0;
+displacement.canvas.style.left = 0;
+displacement.canvas.style.zIndex = 10;
+document.body.append(displacement.canvas);
+
+/**
  * Particles
  */
-const particlesGeometry = new THREE.PlaneGeometry(10, 10, 32, 32);
+const particlesGeometry = new THREE.PlaneGeometry(10, 10, 128, 128);
 
 const particlesMaterial = new THREE.ShaderMaterial({
   vertexShader: particlesVertexShader,
@@ -91,7 +108,7 @@ const particlesMaterial = new THREE.ShaderMaterial({
       )
     ),
     uPictureTexture: new THREE.Uniform(
-      textureLoader.load("../../static/textures/picture-2.png")
+      textureLoader.load("../../static/textures/picture-4.png")
     ),
   },
 });
