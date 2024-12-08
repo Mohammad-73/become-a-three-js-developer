@@ -36,7 +36,7 @@ gltfLoader.setDRACOLoader(dracoLoader);
  * Environment map
  */
 rgbeLoader.load(
-  "../../static/textures/static/environmentMaps/0/2k.hdr",
+  "../../static/textures/urban_alley_01_1k.hdr",
   (environmentMap) => {
     environmentMap.mapping = THREE.EquirectangularReflectionMapping;
 
@@ -128,27 +128,27 @@ gui.add(material, "thickness", 0, 1, 0.001);
 gui.addColor(material, "color");
 
 // Geometry
-let geometry = new THREE.IcosahedronGeometry(2.5, 50);
-geometry = mergeVertices(geometry);
-geometry.computeTangents();
+// let geometry = new THREE.IcosahedronGeometry(2.5, 50);
+// geometry = mergeVertices(geometry);
+// geometry.computeTangents();
 
 // Mesh
-const wobble = new THREE.Mesh(geometry, material);
-wobble.customDepthMaterial = depthMaterial;
-wobble.receiveShadow = true;
-wobble.castShadow = true;
-scene.add(wobble);
+// const wobble = new THREE.Mesh(geometry, material);
+// wobble.customDepthMaterial = depthMaterial;
+// wobble.receiveShadow = true;
+// wobble.castShadow = true;
+// scene.add(wobble);
 
 // Model
-// gltfLoader.load("../../static/models/suzanne.glb", (gltf) => {
-//   const wobble = gltf.scene.children[0];
-//   wobble.receiveShadow = true;
-//   wobble.castShadow = true;
-//   wobble.material = material;
-//   wobble.customDepthMaterial = depthMaterial;
+gltfLoader.load("../../static/models/42-wobbly/suzanne.glb", (gltf) => {
+  const wobble = gltf.scene.children[0];
+  wobble.receiveShadow = true;
+  wobble.castShadow = true;
+  wobble.material = material;
+  wobble.customDepthMaterial = depthMaterial;
 
-//   scene.add(wobble);
-// });
+  scene.add(wobble);
+});
 
 // Plane
 const plane = new THREE.Mesh(
