@@ -6,8 +6,9 @@ uniform float uWarpPositionFrequency;
 uniform float uWarpTimeFrequency;
 uniform float uWarpStrength;
 
-
 attribute vec4 tangent;
+
+varying float vWobble;
 
 #include ../includes/simplexNoise4d.glsl;
 
@@ -42,4 +43,7 @@ void main() {
     vec3 toA = normalize(positionA - csm_Position);
     vec3 toB = normalize(positionB - csm_Position);
     csm_Normal = cross(toA, toB);
+
+    // Varying
+    vWobble = wobble / uStrength;
 }
