@@ -105,7 +105,7 @@ const clock = new THREE.Clock();
 // Animation
 const tick = () => {
   // Clock
-  const elapsedTime = clock.getElapsedTime() / 2;
+  const elapsedTime = clock.getElapsedTime();
 
   // Update object
   sphere.rotation.y = elapsedTime;
