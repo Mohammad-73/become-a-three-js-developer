@@ -23,8 +23,14 @@ void main() {
     color = mix(color, uColorSand, sandMix);
 
     // Grass
-    float grassMix = step(-0.06, vPosition.);
+    float grassMix = step(-0.06, vPosition.y);
     color = mix(color, uColorGrass, grassMix);
+
+    // Rock
+    float rockMix = vUpDot;
+    rockMix = 1.0 - step(0.8, rockMix);
+    rockMix *= step(- 0.06, vPosition.y);
+    color = mix(color, uColorRock, rockMix);
 
     // Snow
     float snowThreshold = 0.45;
@@ -34,5 +40,4 @@ void main() {
 
     // Final color
     csm_DiffuseColor = vec4(color, 1.0);
-    csm_FragColor = vec4(vec3(vUpDot), 1.0);
 }

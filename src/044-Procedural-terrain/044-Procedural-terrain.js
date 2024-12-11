@@ -47,7 +47,7 @@ geometry.deleteAttribute("normal");
 geometry.rotateX(-Math.PI * 0.5);
 
 // Material
-debugObject.colorWaterDeep = "#002b3de";
+debugObject.colorWaterDeep = "#002b3d";
 debugObject.colorWaterSurface = "#66a8ff";
 debugObject.colorSand = "#ffe894";
 debugObject.colorGrass = "#85d534";
@@ -82,12 +82,12 @@ gui.add(uniforms.uWarpFrequency, "value", 0, 10, 0.001).name("uWarpFrequency");
 gui.add(uniforms.uWarpStrength, "value", 0, 1, 0.001).name("uWarpStrength");
 
 gui
-  .addColor(debugObject, "colorWaterDeep")
+  .add(debugObject, "colorWaterDeep")
   .onChange(() =>
     uniforms.uColorWaterDeep.value.set(debugObject.colorWaterDeep)
   );
 gui
-  .addColor(debugObject, "colorWaterSurface")
+  .add(debugObject, "colorWaterSurface")
   .onChange(() =>
     uniforms.uColorWaterSurface.value.set(debugObject.colorWaterSurface)
   );
@@ -135,6 +135,20 @@ terrain.customDepthMaterial = depthMaterial;
 terrain.receiveShadow = true;
 terrain.castShadow = true;
 scene.add(terrain);
+
+/**
+ * Water
+ */
+const water = new THREE.Mesh(
+  new THREE.PlaneGeometry(10, 10, 1, 1),
+  new THREE.MeshPhysicalMaterial({
+    transmission: 1,
+    roughness: 0.3,
+  })
+);
+water.rotation.x = -Math.PI * 0.5;
+water.position.y = -0.1;
+scene.add(water);
 
 /**
  * Board
