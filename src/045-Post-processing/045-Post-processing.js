@@ -260,10 +260,10 @@ const DisplacementShader = {
     varying vec2 vUv;
   
     void main() {
-    //   vec2 newUv = vec2(
-    //     vUv.x,
-    //     vUv.y + sin(vUv.x * 10.0 + uTime) * 0.1
-    //   );
+      //  vec2 newUv = vec2(
+      //    vUv.x,
+      //    vUv.y + sin(vUv.x * 10.0 + uTime) * 0.1
+      //  );
       vec3 normalColor = texture2D(uNormalMap, vUv).xyz * 2.0 - 1.0;
 
       vec2 newUv = vUv + normalColor.xy * 0.1;
