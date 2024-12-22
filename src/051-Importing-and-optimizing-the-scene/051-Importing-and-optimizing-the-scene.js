@@ -8,6 +8,13 @@ import {
 import * as dat from "dat.gui";
 
 /**
+ * Spector JS
+ */
+// const SPECTOR = require("spectorjs");
+// const spector = new SPECTOR.Spector();
+// spector.displayUI();
+
+/**
  * Base
  */
 // Debug
@@ -51,7 +58,10 @@ bakedTexture.encoding = THREE.sRGBEncoding;
 const bakedMaterial = new THREE.MeshBasicMaterial({ map: bakedTexture });
 
 // Portal light material
-const portalLightMaterial = new THREE.MeshBasicMaterial({ color: "#ffffff" });
+const portalLightMaterial = new THREE.MeshBasicMaterial({
+  color: "#ffffff",
+  //   side: THREE.DoubleSide,
+});
 
 // Pole light material
 const poleLightMaterial = new THREE.MeshBasicMaterial({ color: "#ffffe5" });
@@ -60,10 +70,11 @@ const poleLightMaterial = new THREE.MeshBasicMaterial({ color: "#ffffe5" });
  * Model
  */
 gltfLoader.load("../../static/models/PortalScene/portal.glb", (gltf) => {
-  gltf.scene.traverse((child) => {
-    child.material = bakedMaterial;
-  });
+  //   gltf.scene.traverse((child) => {
+  //     child.material = bakedMaterial;
+  //   });
 
+  const bakedMesh = gltf.scene.children.find((child) => child.name === "baked");
   const portalLightMesh = gltf.scene.children.find(
     (child) => child.name === "portalLight"
   );
@@ -74,6 +85,7 @@ gltfLoader.load("../../static/models/PortalScene/portal.glb", (gltf) => {
     (child) => child.name === "poleLightB"
   );
 
+  bakedMesh.material = bakedMaterial;
   portalLightMesh.material = portalLightMaterial;
   poleLightBMesh.material = poleLightMaterial;
   poleLightBMesh.material = poleLightMaterial;
