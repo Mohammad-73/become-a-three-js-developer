@@ -8,6 +8,8 @@ import {
 import * as dat from "dat.gui";
 import firefliesVertexShader from "./fireflies/vertex.glsl";
 import firefliesFragmentShader from "./fireflies/fragment.glsl";
+import portalVertexShader from "./portal/vertex.glsl";
+import portalFragmentShader from "./portal/fragment.glsl";
 
 /**
  * Base
@@ -57,7 +59,13 @@ const bakedMaterial = new THREE.MeshBasicMaterial({ map: bakedTexture });
 const poleLightMaterial = new THREE.MeshBasicMaterial({ color: 0xffffe5 });
 
 // Portal light material
-const portalLightMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+const portalLightMaterial = new THREE.ShaderMaterial({
+  uniforms: {
+    uTime: { value: 0 },
+  },
+  vertexShader: portalVertexShader,
+  fragmentShader: portalFragmentShader,
+});
 
 /**
  * Model
@@ -205,6 +213,7 @@ const tick = () => {
 
   // Update materials
   firefliesMaterial.uniforms.uTime.value = elapsedTime;
+  portalLightMaterial.uniforms.uTime.value = elapsedTime;
 
   // Update controls
   controls.update();
